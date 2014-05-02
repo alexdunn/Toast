@@ -73,9 +73,9 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
     [self makeToast:message duration:CSToastDefaultDuration position:CSToastDefaultPosition];
 }
 
-- (void)makeToast:(NSString *)message duration:(NSTimeInterval)duration position:(id)position {
+- (UIView *)makeToast:(NSString *)message duration:(NSTimeInterval)duration position:(id)position {
     UIView *toast = [self viewForMessage:message title:nil image:nil];
-    [self showToast:toast duration:duration position:position];  
+    return [self showToast:toast duration:duration position:position];
 }
 
 - (void)makeToast:(NSString *)message duration:(NSTimeInterval)duration position:(id)position title:(NSString *)title {
@@ -97,7 +97,7 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
     [self showToast:toast duration:CSToastDefaultDuration position:CSToastDefaultPosition];
 }
 
-- (void)showToast:(UIView *)toast duration:(NSTimeInterval)duration position:(id)point {
+- (UIView *)showToast:(UIView *)toast duration:(NSTimeInterval)duration position:(id)point {
     toast.center = [self centerPointForPosition:point withToast:toast];
     toast.alpha = 0.0;
     
@@ -120,6 +120,7 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
                          // associate the timer with the toast view
                          objc_setAssociatedObject (toast, &CSToastTimerKey, timer, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
                      }];
+    return toast;
     
 }
 
