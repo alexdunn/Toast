@@ -70,38 +70,38 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
 #pragma mark - Toast Methods
 
 - (void)makeToast:(NSString *)message {
-    [self makeToast:message duration:CSToastDefaultDuration position:CSToastDefaultPosition];
+    [self makeToast:message duration:CSToastDefaultDuration position:CSToastDefaultPosition hidesOnTap:CSToastHidesOnTap];
 }
 
-- (UIView *)makeToast:(NSString *)message duration:(NSTimeInterval)duration position:(id)position {
+- (UIView *)makeToast:(NSString *)message duration:(NSTimeInterval)duration position:(id)position hidesOnTap:(BOOL)hidesOnTap {
     UIView *toast = [self viewForMessage:message title:nil image:nil];
-    return [self showToast:toast duration:duration position:position];
+    return [self showToast:toast duration:duration position:position hidesOnTap:hidesOnTap];
 }
 
 - (void)makeToast:(NSString *)message duration:(NSTimeInterval)duration position:(id)position title:(NSString *)title {
     UIView *toast = [self viewForMessage:message title:title image:nil];
-    [self showToast:toast duration:duration position:position];  
+    [self showToast:toast duration:duration position:position hidesOnTap:CSToastHidesOnTap];
 }
 
 - (void)makeToast:(NSString *)message duration:(NSTimeInterval)duration position:(id)position image:(UIImage *)image {
     UIView *toast = [self viewForMessage:message title:nil image:image];
-    [self showToast:toast duration:duration position:position];  
+    [self showToast:toast duration:duration position:position hidesOnTap:CSToastHidesOnTap];
 }
 
 - (void)makeToast:(NSString *)message duration:(NSTimeInterval)duration  position:(id)position title:(NSString *)title image:(UIImage *)image {
     UIView *toast = [self viewForMessage:message title:title image:image];
-    [self showToast:toast duration:duration position:position];  
+    [self showToast:toast duration:duration position:position hidesOnTap:CSToastHidesOnTap];
 }
 
 - (void)showToast:(UIView *)toast {
-    [self showToast:toast duration:CSToastDefaultDuration position:CSToastDefaultPosition];
+    [self showToast:toast duration:CSToastDefaultDuration position:CSToastDefaultPosition hidesOnTap:CSToastHidesOnTap];
 }
 
-- (UIView *)showToast:(UIView *)toast duration:(NSTimeInterval)duration position:(id)point {
+- (UIView *)showToast:(UIView *)toast duration:(NSTimeInterval)duration position:(id)point hidesOnTap:(BOOL)hidesOnTap {
     toast.center = [self centerPointForPosition:point withToast:toast];
     toast.alpha = 0.0;
     
-    if (CSToastHidesOnTap) {
+    if (hidesOnTap) {
         UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:toast action:@selector(handleToastTapped:)];
         [toast addGestureRecognizer:recognizer];
         toast.userInteractionEnabled = YES;
